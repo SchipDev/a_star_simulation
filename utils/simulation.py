@@ -11,6 +11,8 @@ class SimGrid(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "A* Grid Interaction")
         # Initialize grid as a 2D list of zeros (empty cells)
         self.grid = _GridStateManager()
+        self.target_cell_color = arcade.color.GREEN
+        self.grid.set_target_cell(0, 0)
     
     def on_draw(self):
         """Render the screen."""
@@ -20,7 +22,10 @@ class SimGrid(arcade.Window):
             for col in range(GRID_SIZE):
                 x = col * CELL_SIZE
                 y = row * CELL_SIZE
-                color = arcade.color.BLACK if self.grid[row][col] == 0 else arcade.color.BLUE
+                if self.grid.is_target_cell(row, col):
+                    color = self.target_cell_color
+                else:
+                    color = arcade.color.BLACK if self.grid[row][col] == 0 else arcade.color.BLUE
                 arcade.draw_rectangle_filled(
                     x + CELL_SIZE / 2, y + CELL_SIZE / 2, CELL_SIZE, CELL_SIZE, color
                 )
@@ -43,6 +48,7 @@ class _GridStateManager():
     
     def __init__(self):
         self.grid_state = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+        self.target_cell = (None, None)
 
     def __getitem__(self, index):
         return self.grid_state[index]
@@ -60,5 +66,13 @@ class _GridStateManager():
 
     def get_all_cell_neighbors(self, row, column):
         # TODO function should return all neighboring cells in clockwise order
+        pass
+
+    def set_target_cell(self, row, column):
+        self.target_cell = (row, column)
+
+    def is_target_cell(self, row, column):
+        return True if row == self.target_cell[0] and column == self.target_cell[1] else False
+
 
 
