@@ -10,7 +10,7 @@ class SimGrid(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "A* Grid Interaction")
         # Initialize grid as a 2D list of zeros (empty cells)
-        self.grid = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+        self.grid = _GridStateManager()
     
     def on_draw(self):
         """Render the screen."""
@@ -36,4 +36,29 @@ class SimGrid(arcade.Window):
         row = y // CELL_SIZE
         if 0 <= row < GRID_SIZE and 0 <= col < GRID_SIZE:
             # Toggle the cell's state
-            self.grid[row][col] = 1 if self.grid[row][col] == 0 else 0
+            self.grid.set_cell_state(row, col)
+
+
+class _GridStateManager():
+    
+    def __init__(self):
+        self.grid_state = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+
+    def __getitem__(self, index):
+        return self.grid_state[index]
+    
+    def setitem(self, index, value):
+        self.grid_state[index] = value
+
+    def get_grid_state(self):
+        return self.grid_state
+    
+    def set_cell_state(self, row, column):
+        
+        if 0 <= row < GRID_SIZE and 0 <= column < GRID_SIZE:
+            self.grid_state[row][column] = 1 if self.grid_state[row][column] == 0 else 0
+
+    def get_all_cell_neighbors(self, row, column):
+        # TODO function should return all neighboring cells in clockwise order
+
+
