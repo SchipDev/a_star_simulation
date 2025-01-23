@@ -13,6 +13,7 @@ class SimGrid(arcade.Window):
         self.grid = _GridStateManager()
         self.target_cell_color = arcade.color.GREEN
         self.grid.set_target_cell(0, 0)
+        self.grid.set_target_cell(10, 0)
     
     def on_draw(self):
         """Render the screen."""
@@ -44,11 +45,15 @@ class SimGrid(arcade.Window):
             self.grid.set_cell_state(row, col)
 
 
+
+
 class _GridStateManager():
     
     def __init__(self):
         self.grid_state = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+        self.GRID_SIZE = GRID_SIZE
         self.target_cell = (None, None)
+        self.start_cell = (None, None)
 
     def __getitem__(self, index):
         return self.grid_state[index]
@@ -73,6 +78,9 @@ class _GridStateManager():
 
     def is_target_cell(self, row, column):
         return True if row == self.target_cell[0] and column == self.target_cell[1] else False
+    
+    def set_start_cell(self, row, column):
+        self.start_cell = (row, column)
 
 
 
