@@ -58,7 +58,7 @@ class _GridStateManager():
     def __getitem__(self, index):
         return self.grid_state[index]
     
-    def setitem(self, index, value):
+    def __setitem__(self, index, value):
         self.grid_state[index] = value
 
     def get_grid_state(self):
@@ -69,9 +69,16 @@ class _GridStateManager():
         if 0 <= row < GRID_SIZE and 0 <= column < GRID_SIZE:
             self.grid_state[row][column] = 1 if self.grid_state[row][column] == 0 else 0
 
-    def get_all_cell_neighbors(self, row, column):
-        # TODO function should return all neighboring cells in clockwise order
-        pass
+    def get_neighbors(self, row, column):
+        row, col = cell
+        neighbors = []
+
+        for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:  # Up, Down, Left, Right
+            new_row, new_col = row + dr, col + dc
+            if 0 <= new_row < self.GRID_SIZE and 0 <= new_col < self.GRID_SIZE:
+                neighbors.append((new_row, new_col))
+        
+        return neighbors
 
     def set_target_cell(self, row, column):
         self.target_cell = (row, column)
@@ -81,6 +88,9 @@ class _GridStateManager():
     
     def set_start_cell(self, row, column):
         self.start_cell = (row, column)
+
+    def get_start_cell(self):
+        return self.start_cell
 
 
 
