@@ -11,6 +11,7 @@ class AStarSolver:
         self.start_cell = self.grid.get_start_cell()
         self.target_cell = self.grid.get_target_cell()
         self.path = []
+        self.inorder_path = None
 
         # Priority queue for A* search (min-heap)
         self.open_set = []
@@ -67,15 +68,18 @@ class AStarSolver:
 
     def reconstruct_path(self):
         """Reconstructs the shortest path by backtracking from the goal."""
-        path = []
+        path = set()
+        self.inorder_path = []
         current = self.target_cell
 
         while current in self.came_from:
-            path.append(current)
+            path.add(current)
+            self.inorder_path.append(current)
             current = self.came_from[current]
 
-        path.append(self.start_cell)  # Include start cell
-        path.reverse()  # Reverse to get path from start → goal
+        path.add(self.start_cell)  # Include start cell
+        self.inorder_path.append(self.start_cell)
+        self.inorder_path.reverse()  # Reverse to get path from start → goal
 
         return path
     

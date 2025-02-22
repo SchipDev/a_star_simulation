@@ -64,7 +64,7 @@ class SimGrid(arcade.Window):
             while True:
                 result = self.solver.step()  
                 print("Stepped")
-                if isinstance(result, list):  # If A* is complete, store the path
+                if isinstance(result, set):  # If A* is complete, store the path
                     self.solved_path = result
                     print("Path Solved!")
                     print(self.solver.path)
