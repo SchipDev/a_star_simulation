@@ -53,6 +53,9 @@ class AStarSolver:
             if neighbor in self.closed_set:
                 continue  # Ignore nodes already evaluated
 
+            if self.grid.is_obstacle(neighbor):
+                continue
+
             tentative_g_score = self.g_scores[current] + 1  # Uniform movement cost
 
             open_set_cells = {cell for _, cell in self.open_set}  # Set for quick lookup

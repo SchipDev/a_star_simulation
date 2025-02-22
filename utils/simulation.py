@@ -63,7 +63,7 @@ class SimGrid(arcade.Window):
         if key == arcade.key.SPACE:
             while True:
                 result = self.solver.step()  
-                print("Stepped")
+
                 if isinstance(result, set):  # If A* is complete, store the path
                     self.solved_path = result
                     print("Path Solved!")
@@ -128,6 +128,12 @@ class _GridStateManager:
     def get_target_cell(self):
         """Returns the first target cell if it exists, otherwise None."""
         return self.target_cells[0] if self.target_cells else None
+
+    def is_obstacle(self, cell):
+        """Returns true if the specified cell is marked as an obstacle"""
+        row, col = cell
+        return self.grid_state[row][col] == 1
+
 
 
 
