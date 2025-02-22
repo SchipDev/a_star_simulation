@@ -61,11 +61,15 @@ class SimGrid(arcade.Window):
     def on_key_press(self, key, modifiers):
         """Handle key presses."""
         if key == arcade.key.SPACE:
-            result = self.solver.step()  
-            print("Stepped")
-            if isinstance(result, list):  # If A* is complete, store the path
-                self.solved_path = result
-                print(self.solver.path)
+            while True:
+                result = self.solver.step()  
+                print("Stepped")
+                if isinstance(result, list):  # If A* is complete, store the path
+                    self.solved_path = result
+                    print("Path Solved!")
+                    print(self.solver.path)
+                    break
+            
             self.clear()
             self.on_draw()
 
